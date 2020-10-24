@@ -15,22 +15,26 @@ after_success:
   - docker build -t khchoi0301/docker-frontend ./frontend
   - docker build -t khchoi0301/docker-backend ./backend
   - docker build -t khchoi0301/docker-nginx ./nginx
+  - docker build -t khchoi0301/docker-mysql ./mysql
+
 
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
   - docker push khchoi0301/docker-frontend
   - docker push khchoi0301/docker-backend
   - docker push khchoi0301/docker-nginx
+  - docker push khchoi0301/docker-mysql
 
-# deploy:
-#   provider: elasticbeanstalk
-#   region: "ap-northeast-2"
-#   app: "docker-fullstack-app"
-#   env: "DockerFullstackApp-env"
-#   bucket_name: elasticbeanstalk-ap-northeast-2-972153559337
-#   bucket_path: "docker-fullstack-app"
-#   on:
-#     branch: master
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-northeast-2"
+  app: "docker-fullstack-app"
+  env: "DockerFullstackApp-env"
+  bucket_name: elasticbeanstalk-ap-northeast-2-500230960393
+  bucket_path: "docker-fullstack-app"
+  on:
+    branch: master
   
-#   access_key_id: $AWS_ACCESS_KEY
-#   secret_access_key: $AWS_SECRET_ACCESS_KEY
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
